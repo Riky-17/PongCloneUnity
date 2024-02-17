@@ -1,1 +1,1 @@
-# PongCloneUnity
+### A clone of the game "Pong" made in Unity
