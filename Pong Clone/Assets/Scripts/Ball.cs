@@ -67,7 +67,7 @@ public class Ball : MonoBehaviour
 
     public void SetDirection(Vector3 dir)
     {
-        this.direction = dir;
+        direction = dir;
     }
 
     public void SetSpeed(float speed)

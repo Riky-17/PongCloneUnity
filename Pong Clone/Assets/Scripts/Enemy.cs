@@ -17,13 +17,14 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        Vector2 moveDir = Vector2.zero;
+        Vector2 moveDir;
+        float ballSide = GetBallSide(-transform.right, Ball.Instance.transform.position, transform.position);
 
-        if (IsBallOnLeft(-transform.right, Ball.Instance.transform.position, transform.position) > 0)
+        if (ballSide > .1f)
         {
             moveDir = Vector2.down;
         }
-        else if (IsBallOnLeft(-transform.right, Ball.Instance.transform.position, transform.position) < 0)
+        else if (ballSide < -.1f)
         {
             moveDir = Vector2.up;
         }
@@ -38,11 +39,10 @@ public class Enemy : MonoBehaviour
             transform.position += speed * Time.deltaTime * (Vector3)moveDir;
     }
 
-    float IsBallOnLeft(Vector2 a, Vector2 b, Vector2 pt)
+    float GetBallSide(Vector2 a, Vector2 b, Vector2 pt)
     {
-        Vector2 aPt = (a - pt).normalized;
         Vector2 bPt = (b - pt).normalized;
 
-        return Wedge(aPt, bPt);
+        return Wedge(a, bPt);
     }
 }
