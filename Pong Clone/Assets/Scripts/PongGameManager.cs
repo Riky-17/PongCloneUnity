@@ -13,14 +13,28 @@ public class PongGameManager : MonoBehaviour
 
     bool isPlayerTurn = true;
 
+    bool isGamePaused = false;
+    [SerializeField] GameObject pauseScreen;
+
+    float startGameTimer = 3f;
+    bool isFirstThrow = true;
+
     void Awake()
     {
         Instance = this;
+        Time.timeScale = 1;
     }
 
-    void Start()
+    void Update()
     {
-        Ball.Instance.SetDirection(LaunchDir());
+        if(startGameTimer > 0)
+            startGameTimer -= Time.deltaTime;
+        
+        if(startGameTimer <= 0 && isFirstThrow)
+        {
+            Ball.Instance.SetDirection(LaunchDir());
+            isFirstThrow = false;
+        }
     }
 
     Vector3 LaunchDir()
@@ -33,5 +47,17 @@ public class PongGameManager : MonoBehaviour
         isPlayerTurn = !isPlayerTurn;
         Ball.Instance.SetDirection(LaunchDir());
         Ball.Instance.ResetSpeed();
+    }
+
+    public void PauseToggle()
+    {
+        isGamePaused = !isGamePaused;
+        Time.timeScale = isGamePaused ? 0 : 1;
+        pauseScreen.SetActive(isGamePaused);
+    }
+
+    public float GetStartTimer()
+    {
+        return startGameTimer;
     }
 }

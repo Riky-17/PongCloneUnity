@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
+        if(Input.GetKeyDown(KeyCode.Escape))
+            PongGameManager.Instance.PauseToggle();
     }
 
     private void Move()
