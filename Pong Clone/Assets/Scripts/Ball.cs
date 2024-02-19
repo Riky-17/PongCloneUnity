@@ -6,10 +6,10 @@ public class Ball : MonoBehaviour
 {
     public static Ball Instance {get; private set;}
 
-    float speed = 7f;
+    float speed;
+    float initialSpeed = 7f;
+    float bounceSpeed= 17f;
     Vector3 direction;
-    //Vector3 direction = (Vector3.left + Vector3.up).normalized;
-    //Vector3 direction = Vector3.left;
 
     Rigidbody2D rb;
 
@@ -17,12 +17,8 @@ public class Ball : MonoBehaviour
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
+        speed = initialSpeed;
     }
-
-    // void Update()
-    // {
-    //     transform.position += speed * Time.deltaTime * direction;
-    // }
 
     void FixedUpdate()
     {
@@ -33,12 +29,7 @@ public class Ball : MonoBehaviour
     {
         rb.velocity = direction * speed;
 
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, direction, speed * Time.deltaTime);
-
-        // if(hit.transform == null)
-        // {
-        //     hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, -direction, speed * Time.deltaTime);
-        // }
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, transform.localScale, 0, direction, initialSpeed * Time.deltaTime);
 
         if(hit.transform == null)
             return;
@@ -46,12 +37,12 @@ public class Ball : MonoBehaviour
         if (hit.transform.gameObject.TryGetComponent(out Player player))
         {
             direction = (transform.position - player.transform.position).normalized;
-            speed = 20f;
+            speed = bounceSpeed;
         }
         else if (hit.transform.gameObject.TryGetComponent(out Enemy enemy))
         {
             direction = (transform.position - enemy.transform.position).normalized;
-            speed = 20f;
+            speed = bounceSpeed;
         }
         else
         {
@@ -70,8 +61,8 @@ public class Ball : MonoBehaviour
         direction = dir;
     }
 
-    public void SetSpeed(float speed)
+    public void ResetSpeed()
     {
-        this.speed = speed;
+        speed = initialSpeed;
     }
 }

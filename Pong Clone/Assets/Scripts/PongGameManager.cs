@@ -6,10 +6,10 @@ public class PongGameManager : MonoBehaviour
 {
     public static PongGameManager Instance {get; private set;}
 
-    int cosAngDegLaunch => Random.Range(0, 46);
-    int sinAngDegLaunch => Random.Range(-45, 46);
-    float cosAngLaunch => Mathf.Cos(cosAngDegLaunch * Mathf.Deg2Rad / 2);
-    float sinAngLaunch => Mathf.Sin(sinAngDegLaunch * Mathf.Deg2Rad / 2);
+    int CosAngDegLaunch => Random.Range(0, 46);
+    int SinAngDegLaunch => Random.Range(-45, 46);
+    float CosAngLaunch => Mathf.Cos(CosAngDegLaunch * Mathf.Deg2Rad / 2);
+    float SinAngLaunch => Mathf.Sin(SinAngDegLaunch * Mathf.Deg2Rad / 2);
 
     bool isPlayerTurn = true;
 
@@ -25,18 +25,13 @@ public class PongGameManager : MonoBehaviour
 
     Vector3 LaunchDir()
     {
-        if (isPlayerTurn)
-        {
-            return new(-cosAngLaunch, sinAngLaunch);
-        }
-
-        return new(cosAngLaunch, sinAngLaunch);
+        return isPlayerTurn ? new(-CosAngLaunch, SinAngLaunch) : new(CosAngLaunch, SinAngLaunch);
     }
 
     public void PrepareAnotherGame()
     {
         isPlayerTurn = !isPlayerTurn;
         Ball.Instance.SetDirection(LaunchDir());
-        Ball.Instance.SetSpeed(7f);
+        Ball.Instance.ResetSpeed();
     }
 }

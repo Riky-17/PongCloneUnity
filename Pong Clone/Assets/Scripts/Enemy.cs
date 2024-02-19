@@ -7,10 +7,11 @@ public class Enemy : MonoBehaviour
 {
     float speed = 12f;
     bool canMove = true;
+    float wedgeOffset = .1f;
     
     float Wedge(Vector3 a, Vector3 b) => a.x * b.y - a.y * b.x;
 
-    void Update()
+    void FixedUpdate()
     {
         Move();
     }
@@ -20,11 +21,11 @@ public class Enemy : MonoBehaviour
         Vector2 moveDir;
         float ballSide = GetBallSide(-transform.right, Ball.Instance.transform.position, transform.position);
 
-        if (ballSide > .1f)
+        if (ballSide > wedgeOffset)
         {
             moveDir = Vector2.down;
         }
-        else if (ballSide < -.1f)
+        else if (ballSide < -wedgeOffset)
         {
             moveDir = Vector2.up;
         }
