@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -20,10 +18,7 @@ public class Ball : MonoBehaviour
         speed = initialSpeed;
     }
 
-    void FixedUpdate()
-    {
-        CheckCollision();
-    }
+    void FixedUpdate() => CheckCollision();
 
     private void CheckCollision()
     {
@@ -45,9 +40,7 @@ public class Ball : MonoBehaviour
             speed = bounceSpeed;
         }
         else
-        {
             direction = Bounce(hit.normal);
-        }
     }
 
     private Vector3 Bounce(Vector3 surfaceNormal)
@@ -56,13 +49,9 @@ public class Ball : MonoBehaviour
         return direction - 2 * p * surfaceNormal;
     }
 
-    public void SetDirection(Vector3 dir)
-    {
-        direction = dir;
-    }
+    public void SetDirection(Vector3 dir) => direction = dir;
 
-    public void ResetSpeed()
-    {
-        speed = initialSpeed;
-    }
+    public void ResetSpeed() => speed = initialSpeed;
+
+    public void ResetBallPos() => transform.position = Vector3.zero;
 }

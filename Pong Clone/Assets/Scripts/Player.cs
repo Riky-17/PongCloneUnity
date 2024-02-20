@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -27,13 +24,9 @@ public class Player : MonoBehaviour
     private Vector3 CheckInput()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
             return Vector2.up;
-        }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
             return Vector2.down;
-        }
         return Vector2.zero;
     }
 }

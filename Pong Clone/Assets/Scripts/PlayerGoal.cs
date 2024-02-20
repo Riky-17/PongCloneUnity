@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGoal : MonoBehaviour
@@ -10,7 +8,7 @@ public class PlayerGoal : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Ball ball))
         {
-            ball.transform.position = Vector3.zero;
+            ball.ResetBallPos();
             score++;
             ScoreUI.Instance.UpdatePlayerScore(score);
             PongGameManager.Instance.PrepareAnotherGame();

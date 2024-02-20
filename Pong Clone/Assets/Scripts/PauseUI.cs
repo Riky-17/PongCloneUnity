@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +5,7 @@ public class PauseUI : MonoBehaviour
 {
     [SerializeField] Button resumeButton;
     [SerializeField] Button mainMenuButton;
+    [SerializeField] Button restartMatchButton;
 
     void Awake()
     {
@@ -20,5 +19,10 @@ public class PauseUI : MonoBehaviour
             Loader.LoadScene(Scenes.MainMenu);
         });
 
+        restartMatchButton.onClick.AddListener(() => 
+        {
+            PongGameManager.Instance.RestartMatch();
+            PongGameManager.Instance.PauseToggle();
+        });
     }
 }

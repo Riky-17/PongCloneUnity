@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PongGameManager : MonoBehaviour
@@ -18,6 +16,7 @@ public class PongGameManager : MonoBehaviour
 
     float startGameTimer = 3f;
     bool isFirstThrow = true;
+    [SerializeField] GameObject startGameTimerUI;
 
     void Awake()
     {
@@ -37,16 +36,24 @@ public class PongGameManager : MonoBehaviour
         }
     }
 
-    Vector3 LaunchDir()
-    {
-        return isPlayerTurn ? new(-CosAngLaunch, SinAngLaunch) : new(CosAngLaunch, SinAngLaunch);
-    }
-
     public void PrepareAnotherGame()
     {
         isPlayerTurn = !isPlayerTurn;
         Ball.Instance.SetDirection(LaunchDir());
         Ball.Instance.ResetSpeed();
+    }
+
+    public void RestartMatch()
+    {
+        if(startGameTimer > 0)
+            return;
+
+        Ball.Instance.ResetBallPos();
+        Ball.Instance.SetDirection(Vector2.zero);
+        Ball.Instance.ResetSpeed();
+        startGameTimer = 3f;
+        startGameTimerUI.SetActive(true);
+        isFirstThrow = true;
     }
 
     public void PauseToggle()
@@ -56,8 +63,7 @@ public class PongGameManager : MonoBehaviour
         pauseScreen.SetActive(isGamePaused);
     }
 
-    public float GetStartTimer()
-    {
-        return startGameTimer;
-    }
+    Vector3 LaunchDir() => isPlayerTurn ? new(-CosAngLaunch, SinAngLaunch) : new(CosAngLaunch, SinAngLaunch);
+
+    public float GetStartTimer() => startGameTimer;
 }
